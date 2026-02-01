@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Moon, Sun } from 'lucide-react';
 import { Subject } from '@/types/notes';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,8 @@ interface SubjectSidebarProps {
   onSelectSubject: (id: string) => void;
   onAddSubject: (name: string, icon: string) => void;
   onDeleteSubject: (id: string) => void;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 }
 
 const EMOJI_OPTIONS = ['📁', '📚', '🎨', '🎵', '💻', '🌍', '🧮', '✏️', '🎭', '⚽'];
@@ -27,6 +29,8 @@ export function SubjectSidebar({
   onSelectSubject,
   onAddSubject,
   onDeleteSubject,
+  theme,
+  onToggleTheme,
 }: SubjectSidebarProps) {
   const [newSubjectName, setNewSubjectName] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('📁');
@@ -43,11 +47,18 @@ export function SubjectSidebar({
 
   return (
     <aside className="w-64 h-full bg-sidebar border-r border-sidebar-border flex flex-col">
-      <div className="p-4 border-b border-sidebar-border">
+      <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
         <h1 className="text-xl font-semibold text-sidebar-foreground flex items-center gap-2">
           <span className="text-2xl">📝</span>
           StudyNotes
         </h1>
+        <button
+          onClick={onToggleTheme}
+          className="p-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sidebar-foreground"
+          aria-label="Toggle theme"
+        >
+          {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+        </button>
       </div>
 
       <nav className="flex-1 overflow-y-auto p-3 space-y-1">
