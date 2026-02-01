@@ -18,5 +18,4 @@ export const DEFAULT_SUBJECTS: Subject[] = [
   { id: 'math', name: 'Math', icon: '📐', isDefault: true },
   { id: 'english', name: 'English', icon: '📖', isDefault: true },
   { id: 'science', name: 'Science', icon: '🔬', isDefault: true },
-  { id: 'history', name: 'History', icon: '🏛️', isDefault: true },
 ];
