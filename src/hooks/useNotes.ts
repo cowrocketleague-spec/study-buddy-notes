@@ -67,10 +67,17 @@ export function useNotes() {
   }, [selectedSubjectId]);
 
   const addNote = useCallback((subjectId: string) => {
+    const today = new Date();
+    const dateHeader = today.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
     const newNote: Note = {
       id: `note-${Date.now()}`,
       title: 'Untitled Note',
-      content: '',
+      content: `📅 ${dateHeader}\n\n`,
       subjectId,
       createdAt: Date.now(),
       updatedAt: Date.now(),

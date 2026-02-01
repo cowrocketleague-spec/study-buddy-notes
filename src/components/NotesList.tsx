@@ -19,7 +19,13 @@ function formatDate(timestamp: number): string {
   if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays} days ago`;
   
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+function getPreviewText(content: string): string {
+  // Skip the date header line if present
+  const lines = content.split('\n').filter(line => !line.startsWith('📅') && line.trim());
+  return lines.join(' ').substring(0, 80) || 'Empty note...';
 }
 
 export function NotesList({
@@ -57,18 +63,20 @@ export function NotesList({
               <div
                 key={note.id}
                 onClick={() => onSelectNote(note.id)}
-                className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                className={`p-3 rounded-lg cursor-pointer transition-colors border-l-3 ${
                   selectedNoteId === note.id
-                    ? 'bg-accent text-accent-foreground'
-                    : 'hover:bg-accent/50'
+                    ? 'bg-accent text-accent-foreground border-l-primary'
+                    : 'hover:bg-accent/50 border-l-transparent'
                 }`}
               >
-                <h3 className="font-medium text-sm truncate">{note.title}</h3>
-                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                  {note.content || 'Empty note...'}
-                </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  {formatDate(note.updatedAt)}
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="font-medium text-sm truncate flex-1">{note.title}</h3>
+                  <span className="text-[10px] text-muted-foreground whitespace-nowrap">
+                    {formatDate(note.updatedAt)}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1.5 line-clamp-1">
+                  {getPreviewText(note.content)}
                 </p>
               </div>
             ))}
