@@ -24,7 +24,7 @@ function formatDate(timestamp: number): string {
 
 function getPreviewText(content: string): string {
   // Skip the date header line if present
-  const lines = content.split('\n').filter(line => !line.startsWith('📅') && line.trim());
+  const lines = content.split('\n').filter(line => !line.startsWith('—') && line.trim());
   return lines.join(' ').substring(0, 80) || 'Empty note...';
 }
 
