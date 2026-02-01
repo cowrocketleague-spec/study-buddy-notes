@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNotes } from '@/hooks/useNotes';
+import { useTheme } from '@/hooks/useTheme';
 import { SubjectSidebar } from '@/components/SubjectSidebar';
 import { NotesList } from '@/components/NotesList';
 import { NoteEditor } from '@/components/NoteEditor';
@@ -26,6 +27,7 @@ const Index = () => {
     deleteNote,
     getNotesForSubject,
   } = useNotes();
+  const { theme, toggleTheme } = useTheme();
 
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [mobileView, setMobileView] = useState<MobileView>('subjects');
@@ -83,6 +85,8 @@ const Index = () => {
         onSelectSubject={handleSelectSubject}
         onAddSubject={addSubject}
         onDeleteSubject={deleteSubject}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       
       {selectedSubjectId && selectedSubject ? (
@@ -122,6 +126,8 @@ const Index = () => {
             onSelectSubject={handleSelectSubject}
             onAddSubject={addSubject}
             onDeleteSubject={deleteSubject}
+            theme={theme}
+            onToggleTheme={toggleTheme}
           />
         </SheetContent>
       </Sheet>
